@@ -1,0 +1,6 @@
+{
+    "name": "abhinay/aub",
+    "description": "AuB project with php integration",
+    "type": "project",
+    "require": {}
+}

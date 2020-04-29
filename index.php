@@ -19,7 +19,7 @@
       <!-- Header -->
       <header id="header" class="alt">
         <span class="logo">
-          <img src="assets/images/Aub-logo.png" alt="" />
+          <img  id="logo" src="assets/images/Aub-logo.png" alt="" />
         </span>
         <span>
           <h2 style="font-weight: 500; padding-bottom: 0; margin-bottom: 0;">
@@ -291,17 +291,19 @@
           <footer class="major">
             <div class="inputForm">
               <div>
-                <input type="text" class="form-control" />
+                <input id="email" type="text" class="form-control" />
+                <div id="result"></div>
               </div>
               <div
                 style="
                   display: flex;
-                  justify-content: flex-start;
-                  align-items: flex-start;
+                  justify-content: center;
+                  align-items: center;
                   margin: 10px;
                 "
               >
                 <button
+                id="register"
                   type="button"
                   class="warning"
                   style="background-color: #f00408; padding-bottom: 10px;"
@@ -352,9 +354,6 @@
         </section>
       </footer>
     </div>
-    <?php
-    echo "Hello World";
-    ?>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
@@ -364,13 +363,39 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="/__/firebase/7.14.2/firebase-app.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$('#email').keypress(function(event) {
+				var email = $('#email').val();
+				var keyCode = event.keyCode;
+				if (keyCode == 13) {
+					$.ajax({
+						type: 'POST',
+						url: 'action.php',
+						data: {email: email},
+						success: function(data) {
+							$('#result').hide();
+							$('#result').html(data);
+							$('#result').fadeIn();
+						}
+					});
+				};
+			});
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/7.14.2/firebase-analytics.js"></script>
-
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+			$('#register').click(function () {
+				var email = $('#email').val();
+				$.ajax({
+					type: 'POST',
+					url: 'action.php',
+					data: {email: email},
+					success: function(data) {
+						$('#result').hide();
+						$('#result').html(data);
+						$('#result').fadeIn();
+					}
+				});
+			});
+		});
+	</script>
   </body>
 </html>
